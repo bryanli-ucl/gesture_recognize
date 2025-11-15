@@ -1,0 +1,18 @@
+# Gesture Recognition Configuration
+
+# List of gesture names (in order of model output classes)
+gestures:
+  - Rock
+  - Paper
+  - Scissors
+
+# Model file paths
+models:
+  left: "trained_models/best_left.pth"
+  right: "trained_models/best_right.pth"
+
+# Hand landmark model path
+hand_landmark_model: "hand_landmarker.task"
+
+# Input size for the model (21 landmarks * 3 coordinates = 63)
+input_size: 63

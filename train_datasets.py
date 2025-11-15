@@ -432,23 +432,30 @@ class GestureTrainer:
         
         try:
             # Create model directory with safe access to config
-            output_settings = self.config.get('output_settings', {})
-            model_dir = output_settings.get('model_save_path', 'trained_models')
+            
+            model_dir = self.config['output_settings']['model_save_path']
             os.makedirs(model_dir, exist_ok=True)
             
             timestamp = time.strftime("%Y%m%d_%H%M%S")
             model_path = os.path.join(model_dir, f"gesture_model_{timestamp}.pth")
             
-            torch.save({
-                'model_state_dict': self.trained_model.state_dict(),
+            torch.save(self.trained_model.state_dict(), model_path)
+            
+            info_path = os.path.join(model_dir, f"training_info_{timestamp}.json")
+            training_info = {
                 'accuracy': self.model_accuracy,
                 'training_history': self.training_history,
                 'gesture_mapping': self.gesture_mapping,
-                'confusion_matrix': self.confusion_matrix,
+                'confusion_matrix': self.confusion_matrix.tolist(),
                 'config': self.config
-            }, model_path)
+            }
             
-            print(f"Model saved to: {model_path}")
+            import json
+            with open(info_path, 'w') as f:
+                json.dump(training_info, f, indent=2)
+            
+            print(f"model save to: {model_path}")
+            print(f"training info save to: {info_path}")
             
         except Exception as e:
             print(f"Error saving model: {str(e)}")

@@ -1,0 +1,21 @@
+# Gesture Recognition Trainer Configuration
+
+# Dataset paths
+datasets:
+  Rock: "./datasets/LR.npy"
+  Paper: "./datasets/LP.npy"
+  Scissor: "./datasets/LS.npy"
+
+# Training parameters
+training_params:
+  epochs: 100
+  learning_rate: 0.003
+  batch_size: 64
+  hidden_layers: [512, 256, 128]
+  dropout: 0.3
+
+# Output settings
+output_settings:
+  model_save_path: "trained_models"
+  plot_save_path: "training_plots"
+
